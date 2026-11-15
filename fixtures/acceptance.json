@@ -1,0 +1,158 @@
+{
+  "scenario": "人工智能开放场景需求撮合与试点治理平台",
+  "synthetic": true,
+  "records": [
+    {
+      "record_id": "scene_demand-001",
+      "payload": {
+        "sector": "sector-0",
+        "problem_severity": 13.9,
+        "data_readiness": 0.47,
+        "deployment_window": 17.7,
+        "budget_band": 19.6,
+        "safety_class": 21.5,
+        "localization_need": 0.91,
+        "integration_count": 25.3,
+        "supplier_capacity": 27.2,
+        "evidence_strength": 0.47,
+        "conflict_count": 31.0,
+        "expected_benefit": 32.9
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-002",
+      "payload": {
+        "sector": "sector-1",
+        "problem_severity": 17.6,
+        "data_readiness": 0.58,
+        "deployment_window": 21.4,
+        "budget_band": 23.3,
+        "safety_class": 25.2,
+        "localization_need": 0.25,
+        "integration_count": 29.0,
+        "supplier_capacity": 30.9,
+        "evidence_strength": 0.58,
+        "conflict_count": 34.7,
+        "expected_benefit": 36.6
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-003",
+      "payload": {
+        "sector": "sector-2",
+        "problem_severity": 21.3,
+        "data_readiness": 0.69,
+        "deployment_window": 25.1,
+        "budget_band": 27.0,
+        "safety_class": 28.9,
+        "localization_need": 0.36,
+        "integration_count": 32.7,
+        "supplier_capacity": 34.6,
+        "evidence_strength": 0.69,
+        "conflict_count": 38.4,
+        "expected_benefit": 40.3
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-004",
+      "payload": {
+        "sector": "sector-3",
+        "problem_severity": 25.0,
+        "data_readiness": 0.8,
+        "deployment_window": 28.8,
+        "budget_band": 30.7,
+        "safety_class": 32.6,
+        "localization_need": 0.47,
+        "integration_count": 36.4,
+        "supplier_capacity": 38.3,
+        "evidence_strength": 0.8,
+        "conflict_count": 42.1,
+        "expected_benefit": 44.0
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-005",
+      "payload": {
+        "sector": "sector-4",
+        "problem_severity": 28.7,
+        "data_readiness": 0.91,
+        "deployment_window": 32.5,
+        "budget_band": 34.4,
+        "safety_class": 36.3,
+        "localization_need": 0.58,
+        "integration_count": 40.1,
+        "supplier_capacity": 42.0,
+        "evidence_strength": 0.91,
+        "conflict_count": 45.8,
+        "expected_benefit": 47.7
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-006",
+      "payload": {
+        "sector": "sector-0",
+        "problem_severity": 32.4,
+        "data_readiness": 0.25,
+        "deployment_window": 36.2,
+        "budget_band": 38.1,
+        "safety_class": 40.0,
+        "localization_need": 0.69,
+        "integration_count": 43.8,
+        "supplier_capacity": 45.7,
+        "evidence_strength": 0.25,
+        "conflict_count": 49.5,
+        "expected_benefit": 51.4
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-007",
+      "payload": {
+        "sector": "sector-1",
+        "problem_severity": 36.1,
+        "data_readiness": 0.36,
+        "deployment_window": 39.9,
+        "budget_band": 41.8,
+        "safety_class": 43.7,
+        "localization_need": 0.8,
+        "integration_count": 47.5,
+        "supplier_capacity": 49.4,
+        "evidence_strength": 0.36,
+        "conflict_count": 53.2,
+        "expected_benefit": 55.1
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    },
+    {
+      "record_id": "scene_demand-008",
+      "payload": {
+        "sector": "sector-2",
+        "problem_severity": 39.8,
+        "data_readiness": 0.47,
+        "deployment_window": 43.6,
+        "budget_band": 45.5,
+        "safety_class": 47.4,
+        "localization_need": 0.91,
+        "integration_count": 51.2,
+        "supplier_capacity": 53.1,
+        "evidence_strength": 0.47,
+        "conflict_count": 56.9,
+        "expected_benefit": 58.8
+      },
+      "state": "submitted",
+      "source": "synthetic-local-acceptance"
+    }
+  ]
+}

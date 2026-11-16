@@ -68,14 +68,37 @@ class Application:
     def register_supplier(self, supplier_id: str, slots: int) -> None:
         self.repository.register_supplier(supplier_id, slots)
 
-    def accept_pilot(self, demand_id: str, supplier_id: str) -> dict[str, Any]:
-        return self.repository.accept_pilot(demand_id, supplier_id)
+    def revise_supplier_commitment(self, supplier_id: str, slots: int, reason: str,
+                                   actor: str = "operations") -> dict[str, Any]:
+        return self.repository.revise_supplier_commitment(supplier_id, slots, reason, actor)
 
-    def finish_pilot(self, demand_id: str, status: str) -> None:
-        self.repository.finish_pilot(demand_id, status)
+    def accept_pilot(self, demand_id: str, supplier_id: str, units: int = 1,
+                     **options: Any) -> dict[str, Any]:
+        return self.repository.accept_pilot(demand_id, supplier_id, units, **options)
+
+    def check_acceptance(self, demand_id: str, supplier_id: str, units: int = 1,
+                         **options: Any) -> dict[str, Any]:
+        return self.repository.check_acceptance(demand_id, supplier_id, units, **options)
+
+    def finish_pilot(self, demand_id: str, status: str, realized_benefit: float | None = None,
+                     actor: str = "operations", reason: str | None = None) -> dict[str, Any]:
+        return self.repository.finish_pilot(demand_id, status, realized_benefit, actor, reason)
 
     def capacity_status(self, supplier_id: str) -> dict[str, Any]:
         return self.repository.capacity_status(supplier_id)
+
+    def supplier_analysis(self, supplier_id: str) -> dict[str, Any]:
+        return self.repository.supplier_analysis(supplier_id)
+
+    def supply_analysis(self) -> dict[str, Any]:
+        return self.repository.supply_analysis()
+
+    def commitment_trail(self, demand_id: str | None = None,
+                         supplier_id: str | None = None) -> list[dict[str, Any]]:
+        return self.repository.commitment_trail(demand_id, supplier_id)
+
+    def supplier_revisions(self, supplier_id: str | None = None) -> list[dict[str, Any]]:
+        return self.repository.supplier_revisions(supplier_id)
 
 
 def load_fixture(path: str | Path) -> dict[str, Any]:

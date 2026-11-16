@@ -8,7 +8,19 @@ from pathlib import Path
 from typing import Any, Iterator, Mapping, Sequence
 
 from scene_exchange.intake.demand_contract import Decision, DomainRecord, ContractError, canonical_json, stable_hash, utc_now
-from scene_exchange.pilots.capacity_book import prepare_capacity, register_supplier, accept_pilot, finish_pilot, capacity_status
+from scene_exchange.pilots.capacity_book import (
+    capacity_status,
+    check_acceptance,
+    commitment_trail,
+    finish_pilot,
+    prepare_capacity,
+    register_supplier,
+    revise_supplier_commitment,
+    supplier_analysis,
+    supplier_revisions,
+    supply_analysis,
+    accept_pilot,
+)
 
 
 SCHEMA = """
@@ -90,19 +102,47 @@ class Repository:
         with self.transaction() as connection:
             register_supplier(connection, supplier_id, slots)
 
-    def accept_pilot(self, demand_id: str, supplier_id: str) -> dict[str, Any]:
+    def revise_supplier_commitment(self, supplier_id: str, slots: int, reason: str,
+                                   actor: str = "operations") -> dict[str, Any]:
+        with self.transaction() as connection:
+            return revise_supplier_commitment(connection, supplier_id, slots, reason, actor)
+
+    def accept_pilot(self, demand_id: str, supplier_id: str, units: int = 1, **options: Any) -> dict[str, Any]:
         with self.transaction() as connection:
             if not connection.execute("SELECT 1 FROM records WHERE record_id=?", (demand_id,)).fetchone():
                 raise ContractError("pilot demand is not registered")
-            return accept_pilot(connection, demand_id, supplier_id)
+            return accept_pilot(connection, demand_id, supplier_id, units, **options)
 
-    def finish_pilot(self, demand_id: str, status: str) -> None:
+    def check_acceptance(self, demand_id: str, supplier_id: str, units: int = 1,
+                         **options: Any) -> dict[str, Any]:
+        with self.connect() as connection:
+            return check_acceptance(connection, demand_id, supplier_id, units, **options)
+
+    def finish_pilot(self, demand_id: str, status: str, realized_benefit: float | None = None,
+                     actor: str = "operations", reason: str | None = None) -> dict[str, Any]:
         with self.transaction() as connection:
-            finish_pilot(connection, demand_id, status)
+            return finish_pilot(connection, demand_id, status, realized_benefit, actor, reason)
 
     def capacity_status(self, supplier_id: str) -> dict[str, Any]:
         with self.connect() as connection:
             return capacity_status(connection, supplier_id)
+
+    def supplier_analysis(self, supplier_id: str) -> dict[str, Any]:
+        with self.connect() as connection:
+            return supplier_analysis(connection, supplier_id)
+
+    def supply_analysis(self) -> dict[str, Any]:
+        with self.connect() as connection:
+            return supply_analysis(connection)
+
+    def commitment_trail(self, demand_id: str | None = None,
+                         supplier_id: str | None = None) -> list[dict[str, Any]]:
+        with self.connect() as connection:
+            return commitment_trail(connection, demand_id, supplier_id)
+
+    def supplier_revisions(self, supplier_id: str | None = None) -> list[dict[str, Any]]:
+        with self.connect() as connection:
+            return supplier_revisions(connection, supplier_id)
 
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:

@@ -65,6 +65,18 @@ class Application:
         return {"snapshot": self.repository.snapshot(), "records": [record.__dict__ for record in self.repository.list_records()],
                 "decisions": self.repository.decision_rows()}
 
+    def register_supplier(self, supplier_id: str, slots: int) -> None:
+        self.repository.register_supplier(supplier_id, slots)
+
+    def accept_pilot(self, demand_id: str, supplier_id: str) -> dict[str, Any]:
+        return self.repository.accept_pilot(demand_id, supplier_id)
+
+    def finish_pilot(self, demand_id: str, status: str) -> None:
+        self.repository.finish_pilot(demand_id, status)
+
+    def capacity_status(self, supplier_id: str) -> dict[str, Any]:
+        return self.repository.capacity_status(supplier_id)
+
 
 def load_fixture(path: str | Path) -> dict[str, Any]:
     try:

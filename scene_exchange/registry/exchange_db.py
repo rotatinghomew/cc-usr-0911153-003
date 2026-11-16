@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Iterator, Mapping, Sequence
 
 from scene_exchange.intake.demand_contract import Decision, DomainRecord, ContractError, canonical_json, stable_hash, utc_now
+from scene_exchange.pilots.capacity_book import prepare_capacity, register_supplier, accept_pilot, finish_pilot, capacity_status
 
 
 SCHEMA = """
@@ -83,6 +84,25 @@ class Repository:
     def initialize(self) -> None:
         with self.connect() as connection:
             connection.executescript(SCHEMA)
+            prepare_capacity(connection)
+
+    def register_supplier(self, supplier_id: str, slots: int) -> None:
+        with self.transaction() as connection:
+            register_supplier(connection, supplier_id, slots)
+
+    def accept_pilot(self, demand_id: str, supplier_id: str) -> dict[str, Any]:
+        with self.transaction() as connection:
+            if not connection.execute("SELECT 1 FROM records WHERE record_id=?", (demand_id,)).fetchone():
+                raise ContractError("pilot demand is not registered")
+            return accept_pilot(connection, demand_id, supplier_id)
+
+    def finish_pilot(self, demand_id: str, status: str) -> None:
+        with self.transaction() as connection:
+            finish_pilot(connection, demand_id, status)
+
+    def capacity_status(self, supplier_id: str) -> dict[str, Any]:
+        with self.connect() as connection:
+            return capacity_status(connection, supplier_id)
 
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
